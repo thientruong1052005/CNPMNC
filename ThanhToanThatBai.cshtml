@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Thanh Toán Thất Bại";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .error-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .error-icon {
+        font-size: 80px;
+        color: #dc3545; /* Màu đỏ cho thông báo lỗi */
+    }
+
+    .error-message {
+        font-size: 20px;
+        color: #495057;
+        margin-top: 20px;
+    }
+
+    .return-cart {
+        margin-top: 30px;
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff; /* Màu xanh cho nút trở về */
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+        .return-cart:hover {
+            background-color: #0056b3; /* Màu xanh tối hơn khi hover */
+        }
+</style>
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/images/bg-01.jpg');">
+</section>
+<div class="error-container">
+    <div class="error-icon">
+        <i class="fas fa-times-circle"></i> <!-- Biểu tượng cho lỗi -->
+    </div>
+    <div class="error-message">
+        Thanh toán không thành công!
+    </div>
+
+    <a href="@Url.Action("GioHang", "Home")" class="return-cart">Quay lại giỏ hàng</a>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
