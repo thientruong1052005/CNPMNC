@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ShopThoiTrang.Models.SanPham_MauSac_Size>
+
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Quản lý sản phẩm</h2>
+    <div class="text-right mb-3">
+        <a href="@Url.Action("ThemSanPham")" class="btn btn-success">Thêm sản phẩm</a>
+    </div>
+    @using (Html.BeginForm("QLSanPham", "Admin", FormMethod.Get))
+    {
+        <div class="form-group">
+            <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" placeholder="Tìm kiếm sản phẩm" class="form-control" />
+            <button type="submit" class="btn btn-primary mt-2">Tìm kiếm</button>
+        </div>
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã sản phẩm</th>
+                <th>Tên sản phẩm</th>
+                <th>Màu sắc</th>
+                <th>Kích cỡ</th>
+                <th>Số lượng</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaSanPham</td>
+                    <td>@item.SanPham.TenSanPham</td>
+                    <td>@item.MauSac.TenMau</td>
+                    <td>@item.Size.TenSize</td>
+                    <td>@item.SoLuong</td>
+                    <td>
+                        @if (item.TrangThai)
+                        {
+                            <span class="badge bg-success">Đang bán</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Ngừng bán</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Sửa", "SuaSanPham", new { id = item.MaSanPhamMauSacSize }, new { @class = "btn btn-info btn-sm" })
+                        @if (item.TrangThai)
+                        {
+                            @Html.ActionLink("Ngừng bán", "NgungBanSanPhamMauSacSize", new { id = item.MaSanPhamMauSacSize }, new { @class = "btn btn-warning btn-sm", onclick = "return confirm('Bạn có chắc chắn muốn ngừng bán sản phẩm này?');" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Bán lại", "BanLaiSanPhamMauSacSize", new { id = item.MaSanPhamMauSacSize }, new { @class = "btn btn-success btn-sm", onclick = "return confirm('Bạn có chắc chắn muốn bán lại sản phẩm này?');" })
+                        }
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+    <!-- Phân trang -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("QLSanPham", new { page = i,  searchTerm=ViewBag.SearchTerm })">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

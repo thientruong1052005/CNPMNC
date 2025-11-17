@@ -1,0 +1,24 @@
+﻿@model ShopThoiTrang.Models.Size
+@{
+    ViewBag.Title = "Thêm Size";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Thêm Size</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenSize, "Tên Size")
+            @Html.TextBoxFor(model => model.TenSize, new { @class = "form-control", placeholder = "Nhập tên size " })
+            @Html.ValidationMessageFor(model => model.TenSize, "", new { @class = "text-danger" })
+        </div>
+
+
+        <button type="submit" class="btn btn-success">Thêm</button>
+        <a href="@Url.Action("QLSize")" class="btn btn-secondary">Quay lại</a>
+    }
+</div>

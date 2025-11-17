@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ShopThoiTrang.Models.MauSac>
+@{
+    ViewBag.Title = "Quản lý Màu Sắc";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Quản lý Màu Sắc</h2>
+    <!-- Button thêm màu sắc -->
+    <div class="text-right mb-3">
+        <a href="@Url.Action("ThemMau")" class="btn btn-success">Thêm Màu Sắc</a>
+    </div>
+    <!-- Form tìm kiếm -->
+    <form method="get" action="@Url.Action("QLMauSac")" class="form-inline justify-content-center mb-4">
+        <div class="input-group">
+            <input type="text" class="form-control" name="searchString" placeholder="Tìm kiếm màu sắc..."
+                   value="@Request.QueryString["searchString"]" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Bảng hiển thị màu sắc -->
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Mã Màu</th>
+                <th>Tên Màu</th>
+                <th>Trạng Thái</th>
+                <th class="text-center">Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaMau</td>
+                    <td>@item.TenMau</td>
+                    <td>@(item.TrangThai ? "Đang hoạt động" : "Đã tắt")</td>
+                    <td class="text-center">
+                        <!-- Link sửa và bật/tắt trạng thái -->
+                        <a href="@Url.Action("SuaMau", new { id = item.MaMau })" class="btn btn-sm btn-warning">Sửa</a>
+                        <a href="@Url.Action("ThayDoiTrangThaiMau", new { id = item.MaMau })" class="btn btn-sm btn-danger">
+                            @(item.TrangThai ? "Tắt" : "Bật")
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Phân trang -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("QLMauSac", new { page = i })">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

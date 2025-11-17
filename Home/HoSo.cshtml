@@ -1,0 +1,86 @@
+﻿@model ShopThoiTrang.Models.TaiKhoan
+
+@{
+    ViewBag.Title = "Hồ Sơ";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/images/bg-01.jpg');">
+</section>
+
+<div class="container">
+    <h2 class="text-center text-white mb-4">Cập nhật hồ sơ của bạn</h2>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success text-center">@ViewBag.Message</div>
+    }
+
+    @using (Html.BeginForm("HoSo", "Home", FormMethod.Post)) 
+    {
+        @Html.AntiForgeryToken()
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-body">
+                <h5 class="card-title text-center">Thông tin cá nhân</h5>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.HoTen, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "Nhập họ tên của bạn" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Nhập email của bạn" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SoDienThoai, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DiaChi, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control", placeholder = "Nhập địa chỉ" })
+                </div>
+                <div class="form-group">
+                    <label for="newPassword" class="form-label">Mật khẩu mới</label>
+                    <input type="password" name="newPassword" class="form-control" placeholder="Nhập mật khẩu mới" />
+                </div>
+                <div class="form-group">
+                    <label for="renewPassword" class="form-label">Nhập lại mật khẩu mới</label>
+                    <input type="password" name="renewPassword" class="form-control" placeholder="Nhập lại mật khẩu mới" />
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .bg-img1 {
+        background-size: cover;
+        background-position: center;
+        padding: 50px 0;
+    }
+
+    .card {
+        margin-top: 20px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>

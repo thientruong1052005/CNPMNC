@@ -1,0 +1,103 @@
+﻿@model ShopThoiTrang.Models.TaiKhoan
+
+@{
+    ViewBag.Title = "Đăng Nhập / Đăng Ký";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/images/bg-01.jpg');">
+</section>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4>Đăng Nhập</h4>
+                </div>
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
+
+                <div class="card-body">
+                    @using (Html.BeginForm("DangNhap", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <label for="Username">Tài Khoản</label>
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Nhập tên tài khoản", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Mật Khẩu</label>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu", required = "required" })
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+                    }
+                </div>
+                <div class="card-footer text-center">
+                    <p>Bạn chưa có tài khoản? <a href="#registerModal" data-toggle="modal">Đăng Ký</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model Đăng Ký -->
+    <div style="margin-top:100px" class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Đăng Ký Tài Khoản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("DangKy", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="HoTen">Họ Tên</label>
+                            @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "Nhập họ tên", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Nhập email", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label for="Username">Tài Khoản</label>
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Nhập tên tài khoản", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Mật Khẩu</label>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label for="DiaChi">Địa Chỉ</label>
+                            @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control", placeholder = "Nhập địa chỉ", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label for="SoDienThoai">Số điện thoại</label>
+                            @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control", placeholder = "Nhập số điện thoại", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label for="PasswordConfirm">Nhập lại Mật Khẩu</label>
+                            <input type="password" name="PasswordConfirm" class="form-control" placeholder="Nhập lại mật khẩu" required="required" />
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">Đăng Ký</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿@model ShopThoiTrang.Models.DanhMuc
+@{
+    ViewBag.Title = "Sửa Danh Mục";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Sửa Danh Mục</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.MaDanhMuc)
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenDanhMuc, "Sửa Danh Mục", new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.TenDanhMuc, new { @class = "form-control", placeholder = "Nhập tên danh mục" })
+            @Html.ValidationMessageFor(model => model.TenDanhMuc, "", new { @class = "text-danger" })
+        </div>
+
+
+        <button type="submit" class="btn btn-warning">Cập nhật</button>
+        <a href="@Url.Action("QLDanhMuc")" class="btn btn-secondary">Quay lại</a>
+    }
+</div>

@@ -1,0 +1,26 @@
+﻿@model ShopThoiTrang.Models.MauSac
+
+@{
+    ViewBag.Title = "Thêm Màu Sắc";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Thêm Màu Sắc</h2>
+
+    @using (Html.BeginForm("ThemMau", "Admin", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenMau, "Tên Màu", new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.TenMau, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TenMau, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Lưu</button>
+            <a href="@Url.Action("QLMauSac")" class="btn btn-secondary">Hủy</a>
+        </div>
+    }
+</div>

@@ -1,0 +1,180 @@
+﻿@model List<ShopThoiTrang.Models.ChiTietGioHang>
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/images/bg-01.jpg');">
+</section>
+
+<div id="cart-form" class="bg0 p-t-75 p-b-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table-shopping-cart">
+                            <tr class="table_head">
+                                <th style="margin-left:20px"></th>
+                                <th style="font-family: 'Roboto', sans-serif;" class="column-1">Hình ảnh</th>
+                                <th style="font-family: 'Roboto', sans-serif;" class="column-2">Tên</th>
+                                <th style="font-family: 'Roboto', sans-serif;" class="column-4">Màu</th>
+                                <th style="font-family: 'Roboto', sans-serif;" class="column-4">Size</th>
+                                <th style="font-family: 'Roboto', sans-serif;" class="column-5">Giá</th>
+                                <th style="font-family: 'Roboto', sans-serif;" class="column-5">Số lượng</th>
+                                <th style="font-family: 'Roboto', sans-serif;" class="column-2">Thành tiền</th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr class="table_row">
+                                    <td style="padding-left:10px">
+                                        <a href="javascript:void(0)" class="btn-delete" data-id="@item.MaSanPhamMauSacSize">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+
+                                    <td class="column-1">
+                                        <div class="how-itemcart1">
+
+                                            <img src="@Url.Content("~/images/" + (item.SanPham_MauSac_Size.SanPham.DoiTuong == 1 ? "women/" : "men/") + item.SanPham_MauSac_Size.SanPham.MaSanPham + "/" + item.SanPham_MauSac_Size.SanPham.HinhAnh)" alt="@item.SanPham_MauSac_Size.SanPham.TenSanPham" width="100" />
+                                        </div>
+                                    </td>
+                                    <td class="column-2">@item.SanPham_MauSac_Size.SanPham.TenSanPham</td>
+                                    <td class="column-4">@item.SanPham_MauSac_Size.MauSac.TenMau</td>
+                                    <td class="column-4">@item.SanPham_MauSac_Size.Size.TenSize</td>
+                                    <td class="column-4">@String.Format("{0:C0}", item.SanPham_MauSac_Size.SanPham.Gia)</td>
+                                    <td class="column-4">
+                                        <div class="wrap-num-product flex-w m-l-auto m-r-0">
+                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                                <i class="fs-16 zmdi zmdi-minus"></i>
+                                            </div>
+
+                                            <input class="mtext-104 cl3 txt-center num-product" type="number" name="@item.MaSanPhamMauSacSize" value="@item.SoLuong" min="1" />
+
+                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                                <i class="fs-16 zmdi zmdi-plus"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="column-4">@String.Format("{0:C0}", item.SanPham_MauSac_Size.SanPham.Gia * item.SoLuong)</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+                    <h4 class="cl2 p-b-30">Tổng giỏ hàng</h4>
+
+                    <div class="flex-w flex-t bor12 p-b-13">
+                        <div class="size-208">
+                            <span class="cl2">Tổng tạm tính:</span>
+                        </div>
+                        <div class="size-209">
+                            <span class="cl2">@String.Format("{0:C0}", ViewBag.TotalAmount)</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-w flex-t p-t-27 p-b-33">
+                        <div class="size-208">
+                            <span class="cl2">Tổng cộng:</span>
+                        </div>
+                        <div class="size-209 p-t-1">
+                            <span class="cl2">@String.Format("{0:C0}", ViewBag.TotalAmount)</span>
+                        </div>
+                    </div>
+                    <form id="payment-form" action="@Url.Action("ThanhToan", "Home")" method="post">
+                        <!-- ComboBox cho phương thức thanh toán -->
+                        <div class="flex-w flex-t p-t-27 p-b-33">
+                            <div class="size-208">
+                                <span class="cl2">Phương thức thanh toán:</span>
+                            </div>
+                            <div class="size-209 p-t-1">
+                                <select class="form-control" name="paymentMethod">
+                                    <option value="cash">Thanh toán bằng tiền mặt</option>
+                                    <option value="bank_transfer">Chuyển khoản</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="flex-c-m cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                            Tiến hành thanh toán
+                        </button>
+                        </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.btn-num-product-up').click(function () {
+            var input = $(this).siblings('.num-product');
+            var quantity = parseInt(input.val());
+            input.val(quantity + 1);
+            updateCart(input.attr('name'), quantity + 1);
+        });
+
+        $('.btn-num-product-down').click(function () {
+            var input = $(this).siblings('.num-product');
+            var quantity = parseInt(input.val());
+            if (quantity > 1) {
+                input.val(quantity - 1);
+                updateCart(input.attr('name'), quantity - 1);
+            }
+        });
+
+        $('.btn-delete').click(function () {
+            var productId = $(this).data('id');
+            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+                $.ajax({
+                    url: '@Url.Action("XoaGioHang", "Home")',
+                    type: 'POST',
+                    data: { id: productId },
+                    success: function (data) {
+                        if (data.success) {
+                            alert(data.message);
+                            location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                    }
+                });
+            }
+        });
+
+           function updateCart(productId, quantity) {
+            $.ajax({
+                url: '@Url.Action("CapNhatGioHang", "Home")',
+                type: 'POST',
+                data: { id: productId, quantity: quantity },
+                success: function(data) {
+                    // Cập nhật lại tổng tiền hoặc thông báo
+                    if(data.success) {
+                        // Cập nhật thành công
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+    });
+    // Gán hàm xử lý sự kiện cho form
+    document.getElementById('payment-form').onsubmit = function (event) {
+        // Ngăn chặn hành động mặc định (tải lại trang)
+        event.preventDefault();
+
+        // Gửi yêu cầu đến server bằng phương thức POST
+        this.submit(); // Gửi form mà không cần xử lý thêm
+    };
+
+</script>

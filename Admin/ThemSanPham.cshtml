@@ -1,0 +1,116 @@
+﻿@model ShopThoiTrang.Models.SanPham
+
+@{
+    ViewBag.Title = "Thêm sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var sizes = ViewBag.Sizes;
+}
+
+
+<div class="container mt-4">
+    <h2 class="text-center">Thêm sản phẩm</h2>
+
+    @using (Html.BeginForm("ThemSanPham", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label for="TenSanPham">Tên sản phẩm</label>
+            @Html.TextBoxFor(m => m.TenSanPham, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label for="MoTa">Mô tả sản phẩm</label>
+            @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = 4 })
+        </div>
+
+        <div class="form-group">
+            <label for="Gia">Giá sản phẩm</label>
+            @Html.TextBoxFor(m => m.Gia, new { @class = "form-control", required = "required", type = "number" })
+        </div>
+
+        <div class="form-group">
+            <label for="HinhAnh">Hình ảnh đại diện</label>
+            <input type="file" name="HinhAnh" class="form-control" required />
+            <small class="form-text text-muted">Chọn hình ảnh đại diện cho sản phẩm (tối đa 1 hình)</small>
+        </div>
+
+        <div class="form-group">
+            <label for="MaDanhMuc">Danh mục sản phẩm</label>
+            @Html.DropDownListFor(m => m.MaDanhMuc, new SelectList(ViewBag.DanhMucList, "MaDanhMuc", "TenDanhMuc"), "Chọn danh mục", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <label for="DoiTuong">Đối tượng</label>
+            @Html.DropDownList("DoiTuong", new SelectList(ViewBag.DoiTuongList, "MaDoiTuong", "TenDoiTuong"), "Chọn đối tượng", new { @class = "form-control" })
+        </div>
+
+        <h5>Chọn màu sắc</h5>
+        if (ViewBag.MauSacList != null)
+        {
+            foreach (var mauSac in ViewBag.MauSacList)
+            {
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="mauSac_@mauSac.MaMau" value="@mauSac.MaMau" name="selectedMauSac" />
+                    <label class="form-check-label" for="mauSac_@mauSac.MaMau">@mauSac.TenMau</label>
+
+                    <!-- Phần kích cỡ và số lượng cho từng màu -->
+                    <div class="size-quantity-container" id="sizeQuantityContainer_@mauSac.MaMau" style="display: none;">
+                        <div class="row mb-3" id="sizeList_@mauSac.MaMau">
+                            <!-- Chỗ này cho phép thêm nhiều kích cỡ cho từng màu -->
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addSizeQuantity('@mauSac.MaMau')">Thêm kích cỡ</button>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning">Không có dữ liệu cho màu sắc.</div>
+        }
+
+        <h5>Hình ảnh kèm theo</h5>
+        <div class="form-group">
+            <label>Chọn hình ảnh kèm theo</label>
+            <input type="file" name="HinhKemTheo" multiple class="form-control" />
+            <small class="form-text text-muted">Chọn nhiều hình ảnh (tối đa 5 hình)</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+    }
+</div>
+
+<script>
+    // Lắng nghe sự kiện thay đổi trong các checkbox màu sắc
+    document.querySelectorAll("input[type='checkbox']").forEach(function (checkbox) {
+        checkbox.addEventListener("change", function () {
+            var colorId = this.value;
+            var sizeQuantityContainer = document.getElementById("sizeQuantityContainer_" + colorId);
+            sizeQuantityContainer.style.display = this.checked ? "block" : "none"; // Hiển thị hoặc ẩn phần kích cỡ và số lượng
+        });
+    });
+
+    function addSizeQuantity(colorId) {
+        var sizeList = document.getElementById("sizeList_" + colorId);
+        var newSizeQuantityDiv = document.createElement("div");
+        newSizeQuantityDiv.className = "row mb-3";
+        newSizeQuantityDiv.innerHTML = `
+            <div class="col-md-6">
+                <label>Kích cỡ</label>
+                <select name="selectedSize_${colorId}[]" class="form-control">
+                    <option value="">Chọn kích cỡ</option>
+                    @foreach (var size in ViewBag.SizeList)
+                    {
+                        <option value="@size.MaSize">@size.TenSize</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Số lượng</label>
+                <input type="number" name="soLuong_${colorId}[]" class="form-control" required="required" />
+            </div>
+        `;
+        sizeList.appendChild(newSizeQuantityDiv);
+    }
+</script>

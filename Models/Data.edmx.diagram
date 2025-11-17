@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="20c0d84e4d2b4abfbcbdfc825b77edc5" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="ShopThoiTrangModel.ChiTietGioHang" Width="1.5" PointX="7.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.DanhMuc" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.GioHang" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.MauSac" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.Quyen" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.SanPham_MauSac_Size" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.Size" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.TaiKhoan" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__ChiTietGi__MaGio__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__ChiTietGi__MaSan__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__GioHang__MaTaiKh__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__SanPham_M__MaMau__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__TaiKhoan__TrangT__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__SanPham_M__MaSiz__4222D4EF" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.DoiTuong" Width="1.5" PointX="5.75" PointY="15.125" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.SanPham" Width="1.5" PointX="8" PointY="7.25" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.sysdiagrams" Width="1.5" PointX="10.375" PointY="0.75" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__SanPham__MaDanhM__398D8EEE" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK_SanPham_DoiTuong" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__SanPham_M__MaSan__403A8C7D" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.ChiTietDonHang" Width="1.5" PointX="7.5" PointY="3.75" />
+        <EntityTypeShape EntityType="ShopThoiTrangModel.DonHang" Width="1.5" PointX="5.25" PointY="8.125" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__ChiTietDo__MaSan__5441852A" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK_ChiTietDonHang_MaDon" />
+        <AssociationConnector Association="ShopThoiTrangModel.FK__DonHang__MaTaiKh__5070F446" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

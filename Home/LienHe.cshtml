@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Liên Hệ";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<!-- Tiêu đề trang -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/images/bg-01.jpg');">
+</section>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
+}
+<!-- Nội dung trang -->
+<section class="bg0 p-t-104 p-b-116">
+    <div class="container">
+        <div class="flex-w flex-tr">
+            <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+                <form method="post" action="@Url.Action("LienHe", "Home")">
+                    <!-- Cập nhật tên controller của bạn -->
+                    <h4 class="cl2 txt-center p-b-30">
+                        Gửi Chúng Tôi Một Tin Nhắn
+                    </h4>
+
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="con_name" placeholder="Họ và Tên Của Bạn">
+
+                    </div>
+
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="con_email" placeholder="Địa Chỉ Email Của Bạn" required>
+                        <img class="how-pos4 pointer-none" src="~/images/icons/icon-email.png" alt="ICON">
+                    </div>
+
+                    <div class="bor8 m-b-30">
+                        <textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="con_message" placeholder="Chúng Tôi Có Thể Giúp Gì Bạn?" required></textarea>
+                    </div>
+
+                    <button class="flex-c-m cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" type="submit">
+                        Gửi
+                    </button>
+                </form>
+            </div>
+
+            <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+                <div class="flex-w w-full p-b-42">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-map-marker"></span>
+                    </span>
+
+                    <div class="size-212 p-t-2">
+                        <span class="cl2">
+                            Địa Chỉ
+                        </span>
+
+                        <p class="cl6 size-213 p-t-18">
+                            Cửa Hàng Coza, Tầng 8, 379 Hudson St, New York, NY 10018, Hoa Kỳ
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex-w w-full p-b-42">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-phone-handset"></span>
+                    </span>
+
+                    <div class="size-212 p-t-2">
+                        <span class="cl2">
+                            Hãy Gọi Cho Chúng Tôi
+                        </span>
+
+                        <p class="stext-115 cl1 size-213 p-t-18">
+                            +84 123 456 789
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex-w w-full">
+                    <span class="fs-18 cl5 txt-center size-211">
+                        <span class="lnr lnr-envelope"></span>
+                    </span>
+
+                    <div class="size-212 p-t-2">
+                        <span class="cl2">
+                            Hỗ Trợ Bán Hàng
+                        </span>
+
+                        <p class="stext-115 cl1 size-213 p-t-18">
+                            lienhe@example.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

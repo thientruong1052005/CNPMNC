@@ -1,0 +1,138 @@
+﻿@model IEnumerable<ShopThoiTrang.Models.SanPham>
+
+@{
+    ViewBag.Title = "Cửa Hàng";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/images/bg-01.jpg');">
+</section>
+
+<div class="bg0 m-t-23 p-b-140">
+    <div class="container">
+        <div class="flex-w flex-sb-m p-b-52">
+            <div class="flex-w flex-c-m m-tb-10">
+                <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
+                    <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
+                    <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+                    Lọc
+                </div>
+
+                <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+                    <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+                    <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+                    Tìm kiếm
+                </div>
+            </div>
+
+            <!-- Tìm kiếm sản phẩm -->
+            <div class="dis-none panel-search w-full p-t-10 p-b-15">
+                <form method="get" action="@Url.Action("CuaHang", new { id = ViewBag.CurrentId })">
+                    <div class="bor8 dis-flex p-l-15">
+                        <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+                            <i class="zmdi zmdi-search"></i>
+                        </button>
+                        <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="searchTerm" placeholder="Tìm kiếm" value="@ViewBag.SearchTerm">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Tìm</button>
+                </form>
+            </div>
+
+            <!-- Lọc theo danh mục -->
+            <div class="dis-none panel-filter w-full p-t-10">
+                <div  class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+                    <form  method="get" action="@Url.Action("CuaHang", new { id = ViewBag.CurrentId })">
+                        <div style="width:200px" class="filter-col1 p-r-15 p-b-27">
+                            <div class="cl2 p-b-15">
+                                Lọc theo danh mục
+                            </div>
+                            <select name="category" class="form-control">
+                                <option value="">Tất cả danh mục</option>
+                                @foreach (var category in ViewBag.DanhMucs)
+                                {
+                                    <option value="@category.MaDanhMuc" @(ViewBag.Category == category.MaDanhMuc ? "selected" : "")>@category.TenDanhMuc</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Lọc theo giá -->
+                        <div style="width:200px" class="filter-col1 p-r-15 p-b-27">
+                            <div class="cl2 p-b-15">
+                                Lọc theo giá
+                            </div>
+                            <label>Giá từ:</label>
+                            <input type="number" name="minPrice" value="@ViewBag.MinPrice" class="form-control" />
+                            <label>Đến:</label>
+                            <input type="number" name="maxPrice" value="@ViewBag.MaxPrice" class="form-control" />
+                        </div>
+
+                        <div class="filter-col1 p-b-27">
+                            <button type="submit" class="btn btn-primary">Lọc</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row isotope-grid">
+            @foreach (var product in Model) // Duyệt qua danh sách sản phẩm
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item @(product.DoiTuong)">
+                    <!-- Block2 -->
+                    <div class="block2">
+                        <div class="block2-pic hov-img0">
+                            <img style="height:350px"
+                                 src="@(product.DoiTuong == 1 ? $"/images/women/{product.MaSanPham}/{product.HinhAnh}" : $"/images/men/{product.MaSanPham}/{product.HinhAnh}")"
+                                 alt="@product.TenSanPham">
+
+                            <a href="@Url.Action("ChiTietSanPham","Home",new {id = product.MaSanPham})" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                                Xem Nhanh
+                            </a>
+                        </div>
+
+                        <div class="block2-txt p-t-20">
+                            <a href="#" class="block2-name dis-block stext-104 cl4 hov-cl1 trans-04">
+                                @product.TenSanPham <!-- Thay đổi với tên sản phẩm thực tế -->
+                            </a>
+                            <span class="block2-price m-text6 p-r-5">
+                                @product.Gia.ToString("N0") đ <!-- Thay đổi với giá bán thực tế -->
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Phân trang -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                @if (ViewBag.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("CuaHang", new { id = ViewBag.CurrentId, page = ViewBag.CurrentPage - 1, searchTerm = ViewBag.SearchTerm, minPrice = ViewBag.MinPrice, maxPrice = ViewBag.MaxPrice, category = ViewBag.Category })" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("CuaHang", new { id = ViewBag.CurrentId, page = i, searchTerm = ViewBag.SearchTerm, minPrice = ViewBag.MinPrice, maxPrice = ViewBag.MaxPrice, category = ViewBag.Category })">@i</a>
+                    </li>
+                }
+
+                @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("CuaHang", new { id = ViewBag.CurrentId, page = ViewBag.CurrentPage + 1, searchTerm = ViewBag.SearchTerm, minPrice = ViewBag.MinPrice, maxPrice = ViewBag.MaxPrice, category = ViewBag.Category })" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>

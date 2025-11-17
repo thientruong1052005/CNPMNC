@@ -1,0 +1,93 @@
+﻿@model ShopThoiTrang.Models.DonHang
+
+@{
+    ViewBag.Title = "Chi Tiết Đơn Hàng";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/images/bg-01.jpg');">
+</section>
+<div class="container mt-5">
+    <h2 class="text-center">Chi Tiết Đơn Hàng</h2>
+
+    <div class="card my-4">
+        <div class="card-header bg-primary text-white">
+            <h4>Mã Đơn Hàng: @Model.MaDonHang</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Ngày Đặt:</strong> @Model.NgayDatHang.ToString("dd/MM/yyyy")</p>
+            <p><strong>Tổng Tiền:</strong> @String.Format("{0:C0}", Model.TongTien)</p>
+            <p><strong>Trạng Thái:</strong> @Model.TrangThaiDonHang</p>
+
+            <h4 class="mt-4">Thông Tin Người Nhận:</h4>
+            <p><strong>Tên:</strong> @Model.TaiKhoan.HoTen</p>
+            <p><strong>Địa Chỉ:</strong> @Model.TaiKhoan.DiaChi</p>
+            <p><strong>Số Điện Thoại:</strong> @Model.TaiKhoan.SoDienThoai</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h4>Chi Tiết Sản Phẩm Trong Đơn Hàng</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Sản Phẩm</th>
+                        <th>Màu Sắc</th>
+                        <th>Size</th>
+                        <th>Số Lượng</th>
+                        <th>Giá</th>
+                        <th>Thành Tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.ChiTietDonHangs != null && ViewBag.ChiTietDonHangs.Count > 0)
+                    {
+                        foreach (var item in ViewBag.ChiTietDonHangs)
+                        {
+                            <tr>
+                                <td>@item.SanPham_MauSac_Size.SanPham.TenSanPham</td>
+                                <td>@item.SanPham_MauSac_Size.MauSac.TenMau</td>
+                                <td>@item.SanPham_MauSac_Size.Size.TenSize</td>
+                                <td>@item.SoLuong</td>
+                                <td>@String.Format("{0:C0}", item.Gia)</td>
+                                <td>@String.Format("{0:C0}", item.Gia * item.SoLuong)</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center">Không có sản phẩm nào trong đơn hàng.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center mt-4 mb-5">
+        <a href="@Url.Action("XemDonHang", "Home")" class="btn btn-primary">Quay Lại Danh Sách Đơn Hàng</a>
+    </div>
+</div>
+
+<style>
+    /* CSS tùy chỉnh để làm cho trang đẹp hơn */
+    .container {
+        max-width: 800px;
+    }
+
+    .card {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+    }
+</style>

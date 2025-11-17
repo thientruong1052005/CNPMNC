@@ -1,0 +1,77 @@
+﻿@model ShopThoiTrang.Models.DonHang
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Chi tiết đơn hàng #@Model.MaDonHang</h2>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label><strong>Tên khách hàng:</strong></label>
+                        <p>@Model.TaiKhoan.HoTen</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label><strong>Ngày đặt hàng:</strong></label>
+                        <p>@Model.NgayDatHang.ToString("dd/MM/yyyy")</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label><strong>Trạng thái đơn hàng:</strong></label>
+                        <p class="@Model.TrangThaiDonHang == "Đã giao" ? "text-success" : "text-warning" ">
+                            @Model.TrangThaiDonHang
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label><strong>Tổng tiền:</strong></label>
+                        <p class="text-danger h4">@Model.TongTien.ToString("N0") đ</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="mt-4">Chi tiết sản phẩm trong đơn hàng</h4>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Màu</th>
+                        <th>Size</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var chiTiet in Model.ChiTietDonHang)
+                    {
+                        <tr>
+                            <td>@chiTiet.SanPham_MauSac_Size.SanPham.TenSanPham</td>
+                            <td>@chiTiet.SanPham_MauSac_Size.MauSac.TenMau</td>
+                            <td>@chiTiet.SanPham_MauSac_Size.Size.TenSize</td>
+                            <td>@chiTiet.SoLuong</td>
+                            <td>@chiTiet.Gia.ToString("N0") đ</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="text-center mt-4">
+                <a href="@Url.Action("QLDonHang")" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

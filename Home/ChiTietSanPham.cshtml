@@ -1,0 +1,296 @@
+﻿@model ShopThoiTrang.Models.SanPham
+
+@{
+    ViewBag.Title = "Chi Tiết Sản Phẩm";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+
+<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('/images/bg-01.jpg');">
+</section>
+
+<section class="sec-product-detail bg0 p-t-65 p-b-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-7 p-b-30">
+                <div class="p-l-25 p-r-30 p-lr-0-lg">
+                    <div class="wrap-slick3 flex-sb flex-w">
+                        <div class="wrap-slick3-dots"></div>
+                        <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+                        <div class="slick3 gallery-lb">
+                            @foreach (var image in ViewBag.Images)
+                            {
+                                <div class="item-slick3" data-thumb="@Url.Content("~/images/" + (Model.DoiTuong == 1 ? "women/" : "men/") + Model.MaSanPham + "/" + image)">
+                                    <div class="wrap-pic-w pos-relative">
+                                        <img style="height:600px" src="@Url.Content("~/images/" + (Model.DoiTuong == 1 ? "women/" : "men/") + Model.MaSanPham + "/" + image)" alt="IMG-PRODUCT">
+                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="@Url.Content("~/images/" + (Model.DoiTuong == 1 ? "women/" : "men/") + Model.MaSanPham + "/" + image)">
+                                            <i class="fa fa-expand"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-5 p-b-30">
+                <div class="p-r-50 p-t-5 p-lr-0-lg">
+                    <h4 class="mtext-105 cl2 js-name-detail p-b-14">
+                        @Model.TenSanPham
+                    </h4>
+
+                    <span class="mtext-106 cl2">
+                        @String.Format("{0:n0}", Model.Gia) đ
+                    </span>
+
+                    <p class="stext-102 cl3 p-t-23">
+                        @Model.MoTa
+                    </p>
+                    <div id="tonKhoSection" class="p-t-10" style="display: none;">
+                        <span class="stext-102 cl3">
+                            Số lượng tồn kho: <span id="tonKhoCount">0</span>
+                        </span>
+                    </div>
+
+
+                    <div class="p-t-33">
+                        <!-- Chọn màu sắc -->
+                        <!-- Chọn màu sắc -->
+                        <div class="flex-w flex-r-m p-b-10">
+                            <div class="size-203 flex-c-m respon6">
+                                Màu
+                            </div>
+                            <div class="size-204 respon6-next">
+                                <div class="rs1-select2 bor8 bg0">
+                                    <select class="js-select2" name="color" id="colorSelect">
+                                        <option value="">Chọn một tùy chọn</option>
+                                        @foreach (var color in ViewBag.MauSac)
+                                        {
+                                            <option value="@color.MauSac.MaMau">@color.MauSac.TenMau</option>
+                                        }
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Chọn kích cỡ -->
+                        <div id="sizeSection" class="p-t-33" style="display: none;">
+                            <div class="flex-w flex-r-m p-b-10">
+                                <div class="size-203 flex-c-m respon6">
+                                    Size
+                                </div>
+                                <div class="size-204 respon6-next">
+                                    <div class="rs1-select2 bor8 bg0">
+                                        <select class="js-select2" name="size" id="sizeSelect">
+                                            <option value="">Chọn một tùy chọn</option>
+                                            <!-- Các tùy chọn kích cỡ sẽ được thêm bằng JavaScript -->
+                                        </select>
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="flex-w flex-r-m p-b-10">
+                            <div class="size-204 flex-w flex-m respon6-next">
+                                <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                        <i class="fs-16 zmdi zmdi-minus"></i>
+                                    </div>
+
+                                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+
+                                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                        <i class="fs-16 zmdi zmdi-plus"></i>
+                                    </div>
+                                </div>
+
+                                <button id="addToCartButton" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                                    Thêm vào giỏ hàng
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sản phẩm liên quan -->
+<section class="sec-relate-product bg0 p-t-45 p-b-105">
+    <div class="container">
+        <div class="p-b-45">
+            <h3 class="cl5 txt-center">
+                Sản phẩm cùng giá
+            </h3>
+        </div>
+
+        <div class="wrap-slick2">
+            <div class="slick2">
+                @foreach (var sp in ViewBag.SanPhamTuongTu)
+                {
+                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
+                        <div class="block2">
+                            <div class="block2-pic hov-img0">
+                                <img src="@Url.Content("~/images/" + (sp.DoiTuong == 1 ? "women/" : "men/") +sp.MaSanPham +"/" + sp.HinhAnh)" alt="IMG-PRODUCT">
+                                <a href="@Url.Action("ChiTietSanPham", new { masanpham = sp.MaSanPham })" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
+                                    Xem nhanh
+                                </a>
+                            </div>
+                            <div class="block2-txt flex-w flex-t p-t-14">
+                                <div class="block2-txt-child1 flex-col-l ">
+                                    <a href="@Url.Action("ChiTietSanPham", new { masanpham = sp.MaSanPham })" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                        @sp.TenSanPham
+                                    </a>
+                                    <span class="stext-105 cl3">
+                                        @String.Format("{0:n0}", sp.Gia) đ
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        $(document).ready(function () {
+            $('.btn-num-product-up').click(function () {
+                var input = $(this).siblings('.num-product');
+                var quantity = parseInt(input.val());
+                input.val(quantity + 1);
+
+            });
+
+            $('.btn-num-product-down').click(function () {
+                var input = $(this).siblings('.num-product');
+                var quantity = parseInt(input.val());
+                if (quantity > 1) {
+                    input.val(quantity - 1);
+
+                }
+            });
+            // Khi thay đổi lựa chọn màu
+            $('#colorSelect').change(function() {
+                var selectedColor = $(this).val(); // Lấy giá trị mã màu đã chọn
+                var productId = '@Model.MaSanPham'; // Lấy mã sản phẩm từ model
+
+                // Kiểm tra nếu có màu sắc được chọn
+                if (selectedColor) {
+                    // Gửi yêu cầu AJAX để lấy kích cỡ tương ứng với màu đã chọn
+                    $.ajax({
+                        url: '@Url.Action("LaySize", "Home")', // Đường dẫn đến action trong controller
+                        type: 'GET',
+                        data: { colorId: selectedColor, productId: productId }, // Gửi mã màu và mã sản phẩm
+                        success: function(data) {
+                            var sizeSelect = $('#sizeSelect'); // Lấy phần tử select cho kích cỡ
+                            sizeSelect.empty(); // Xóa các tùy chọn cũ
+
+                            // Kiểm tra nếu có kích cỡ nào trả về
+                            if (data.length > 0) {
+                                sizeSelect.append('<option value="">Chọn một tùy chọn</option>'); // Thêm tùy chọn đầu tiên
+                                $.each(data, function(index, size) {
+                                    sizeSelect.append('<option value="' + size.MaSize + '">' + size.TenSize + '</option>'); // Thêm các tùy chọn kích cỡ
+                                });
+                                $('#sizeSection').show(); // Hiện phần chọn kích cỡ
+                            } else {
+                                sizeSelect.append('<option value="">Không có kích cỡ nào</option>'); // Thông báo không có kích cỡ
+                                $('#sizeSection').hide(); // Ẩn phần chọn kích cỡ nếu không có
+                            }
+                        },
+                        error: function() {
+                            alert('Lỗi khi lấy kích cỡ.'); // Thông báo lỗi
+                        }
+                    });
+                } else {
+                    $('#sizeSection').hide(); // Ẩn phần chọn kích cỡ nếu không có màu nào được chọn
+                }
+            });
+             // Khi thay đổi lựa chọn kích cỡ
+    $('#sizeSelect').change(function() {
+        var selectedSize = $(this).val(); // Lấy giá trị mã kích cỡ đã chọn
+        var selectedColor = $('#colorSelect').val(); // Lấy mã màu đã chọn
+        var productId = '@Model.MaSanPham'; // Lấy mã sản phẩm từ model
+
+        // Gửi yêu cầu AJAX để lấy số lượng tồn kho
+        if (selectedSize && selectedColor) {
+            $.ajax({
+                url: '@Url.Action("LaySoLuongTonKho", "Home")',
+                type: 'GET',
+                data: { colorId: selectedColor, sizeId: selectedSize, productId: productId },
+                success: function(tonKho) {
+                    $('#tonKhoCount').text(tonKho); // Hiển thị số lượng tồn kho
+                    $('#tonKhoSection').show(); // Hiện phần thông tin tồn kho
+                },
+                error: function() {
+                    alert('Lỗi khi lấy số lượng tồn kho.');
+                }
+            });
+        } else {
+            $('#tonKhoSection').hide(); // Ẩn phần thông tin tồn kho nếu không có màu hoặc kích cỡ nào được chọn
+        }
+    });
+        });
+
+        $(document).ready(function () {
+    // Khi nhấn nút Thêm vào giỏ hàng
+    $('#addToCartButton').click(function () {
+        var selectedColor = $('#colorSelect').val();
+        var selectedSize = $('#sizeSelect').val();
+        var quantity = $('input[name="num-product"]').val();
+        var productId = '@Model.MaSanPham';
+
+        // Kiểm tra người dùng đã chọn màu và kích cỡ
+        if (!selectedColor) {
+            alert('Vui lòng chọn màu!');
+            return;
+        }
+
+        if (!selectedSize) {
+            alert('Vui lòng chọn kích cỡ!');
+            return;
+        }
+
+        // Gửi yêu cầu thêm sản phẩm vào giỏ hàng nếu đã chọn đủ
+        $.ajax({
+            url: '@Url.Action("ThemVaoGioHang", "Home")',
+            type: 'POST',
+            data: {
+                maSanPham: productId,
+                maMau: selectedColor,
+                maSize: selectedSize,
+                soLuong: quantity
+            },
+            success: function (response) {
+                alert(response.message); // Hiển thị thông báo thành công hoặc lỗi
+            },
+            error: function () {
+                alert('Có lỗi xảy ra khi thêm vào giỏ hàng.');
+            }
+        });
+    });
+});
+
+</script>
+<a href="~/Views/Home/CuaHang.cshtml">~/Views/Home/CuaHang.cshtml</a>
+<a href="~/Views/Home/ChiTietDonHang.cshtml">~/Views/Home/ChiTietDonHang.cshtml</a>
+<a href="~/Views/Home/ChiTietSanPham.cshtml">~/Views/Home/ChiTietSanPham.cshtml</a>
+<a href="~/Views/Home/DangNhap.cshtml">~/Views/Home/DangNhap.cshtml</a>
+<a href="~/Views/Home/GioHang.cshtml">~/Views/Home/GioHang.cshtml</a>
+<a href="~/Views/Home/GioiThieu.cshtml">~/Views/Home/GioiThieu.cshtml</a>
+<a href="~/Views/Home/HoSo.cshtml">~/Views/Home/HoSo.cshtml</a>
+<a href="~/Views/Home/LienHe.cshtml">~/Views/Home/LienHe.cshtml</a>
+<a href="~/Views/Home/ThanhToanQuaThe.cshtml">~/Views/Home/ThanhToanQuaThe.cshtml</a>
+<a href="~/Views/Home/ThanhToanThanhCong.cshtml">~/Views/Home/ThanhToanThanhCong.cshtml</a>
+<a href="~/Views/Home/ThanhToanThatBai.cshtml">~/Views/Home/ThanhToanThatBai.cshtml</a>
+<a href="~/Views/Home/TrangChu.cshtml">~/Views/Home/TrangChu.cshtml</a>
+<a href="~/Views/Home/XemDonHang.cshtml">~/Views/Home/XemDonHang.cshtml</a>

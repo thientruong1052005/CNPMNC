@@ -1,0 +1,45 @@
+﻿@model ShopThoiTrang.Models.SanPham_MauSac_Size
+
+@{
+    ViewBag.Title = "Sửa sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Sửa sản phẩm</h2>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+    @using (Html.BeginForm("SuaSanPham", "Admin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.SoLuong)
+            @Html.TextBoxFor(m => m.SoLuong, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.SoLuong, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.MaMau)
+            @Html.DropDownList("MaMau", ViewBag.MauSacList as SelectList, "Chọn màu", new { @class = "form-control" })
+            @Html.ValidationMessage("MaMau", "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.MaSize)
+            @Html.DropDownList("MaSize", ViewBag.SizeList as SelectList, "Chọn kích thước", new { @class = "form-control" })
+            @Html.ValidationMessage("MaSize", "", new { @class = "text-danger" })
+        </div>
+
+        <input type="hidden" name="MaSanPhamMauSacSize" value="@Model.MaSanPhamMauSacSize" />
+        <input type="hidden" name="MaSanPham" value="@Model.MaSanPham" />
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        @Html.ActionLink("Trở lại", "QLSanPham", null, new { @class = "btn btn-secondary" })
+    }
+</div>
+
+

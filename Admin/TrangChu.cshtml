@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "TrangChu";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h2>Trang Quản Trị</h2>
+
+    <div class="row">
+        <!-- Thẻ tổng quan sản phẩm -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Tổng Sản Phẩm</h6>
+                            <h3>@ViewBag.TotalProducts</h3>
+                        </div>
+                        <div>
+                            <i class="fas fa-box fa-3x text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thẻ tổng quan tài khoản -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Tài Khoản</h6>
+                            <h3>@ViewBag.TotalAccounts</h3>
+                        </div>
+                        <div>
+                            <i class="fas fa-users fa-3x text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thẻ tổng quan danh mục -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Danh Mục</h6>
+                            <h3>@ViewBag.TotalCategories</h3>
+                        </div>
+                        <div>
+                            <i class="fas fa-list fa-3x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thẻ tổng quan doanh thu -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Doanh Thu</h6>
+                            <h3>@String.Format("{0:n0}đ", ViewBag.TotalRevenue)</h3>
+                        </div>
+                        <div>
+                            <i class="fas fa-dollar-sign fa-3x text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thống kê đơn hàng -->
+    <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Đang chờ xử lý</h6>
+                            <h3>@ViewBag.PendingOrders</h3>
+                        </div>
+                        <div>
+                            <i class="fas fa-clock fa-3x text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Đã duyệt</h6>
+                            <h3>@ViewBag.ApprovedOrders</h3>
+                        </div>
+                        <div>
+                            <i class="fas fa-check fa-3x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Đã thanh toán</h6>
+                            <h3>@ViewBag.PaidOrders</h3>
+                        </div>
+                        <div>
+                            <i class="fas fa-credit-card fa-3x text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Đã hủy</h6>
+                            <h3>@ViewBag.CancelledOrders</h3>
+                        </div>
+                        <div>
+                            <i class="fas fa-times fa-3x text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
